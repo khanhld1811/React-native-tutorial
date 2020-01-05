@@ -16,6 +16,8 @@ class FlatListItem extends Component {
             item:{}
         }
     }
+    
+    // refresh
     refreshFlatListItem = (changedItem) => {
         this.setState({item: changedItem});
         // this.setState((prevState) => {
@@ -24,6 +26,7 @@ class FlatListItem extends Component {
         //     };
         // });
     }
+
     render() {
         const swipeSetting = {
             autoClose: true,
