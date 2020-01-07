@@ -25,9 +25,8 @@ export function* watchFetchMovies() {
 }
 
 function* addNewMovie(action) {
-    alert('DMM'+action.releaseYear);
     try {
-        const result = yield Api.insertNewMovieFromApi(action.addNewMovie)
+        const result = yield Api.insertNewMovieFromApi(action.newMovie)
         if (result === true) {
             yield put({ type: ADD_MOVIE, sort: 'desc' })
         }
