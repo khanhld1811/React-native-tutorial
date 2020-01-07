@@ -1,4 +1,4 @@
-import { FETCH_MOVIES, FETCH_SUCCEEDED, FETCH_FAILED, ADD_MOVIE } from '../actions/actionTypes';
+import { FETCH_MOVIES, FETCH_SUCCEEDED, FETCH_FAILED, ADD_MOVIE, UPDATE_SUCCEEDED, UPDATE_MOVIE,DELETE_MOVIE,DELETE_SUCCEEDED } from '../actions/actionTypes';
 
 //saga effects
 import { put, takeLatest } from 'redux-saga/effects';
@@ -30,9 +30,6 @@ function* addNewMovie(action) {
         if (result === true) {
             yield put({ type: ADD_MOVIE, sort: 'desc' })
         }
-        else {
-
-        }
     }
     catch (error) {
         alert(`insertNewMovieFromApi ${error}`);
@@ -41,4 +38,41 @@ function* addNewMovie(action) {
 
 export function* watchAddNewMovie(){
     yield takeLatest(ADD_MOVIE, addNewMovie);
+}
+
+//Update a movie
+function* updateMovie(action){
+    try{
+        const result = yield Api.updateMovieFromApi(action.updatedMovie);
+        if(result === true){
+            yield put({type:UPDATE_SUCCEEDED, updatedMovie: action.updatedMovie});
+        }
+    }
+    catch(error){
+            alert(`UpdateMovieFromApi${error}`)
+    }
+}
+
+export function* watchUpdateMovie(){
+    yield takeLatest(UPDATE_MOVIE, updateMovie);
+}
+
+//Delete a movie
+function* deleteMovie(action){
+    try{
+        const result = yield Api.deleteMovieFromApi(action.deletedMovieId);
+        if(result === true){
+            yield put({type: DELETE_SUCCEEDED, deletedMovieId: action.deletedMovieId})
+            alert('success');
+        }else{
+           
+        }
+    }
+    catch(error){
+        console.error(error);
+    }
+}
+
+export function* watchDeleteMovie(){
+    yield takeLatest(DELETE_MOVIE, deleteMovie);
 }
